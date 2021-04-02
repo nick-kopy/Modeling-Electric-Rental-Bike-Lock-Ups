@@ -283,3 +283,31 @@ def graph_distances(city, ax):
     ax.set_xlabel('Distance from Nearest Station (m)', fontsize=14)
     ax.set_ylabel('Frequency\n(Number of Rides)', fontsize=14)
     ax.set_title('Distance from Nearest Station Histogram - {}'.format(c), fontsize=16)
+
+def cross_val(X_train, y_train, k):
+    '''Basic CV function that works with OLS specifically
+
+    Returns average RMSE for training error.
+    '''
+    rmse_arr = []
+    kf = KFold(n_splits=k)
+
+    # Each loop adds the rmse for that fold
+    for train_index, test_index in kf.split(X_train):
+
+        # necessary indices from a given fold
+        Kx_train, Kx_test = X_train[train_index], X_train[test_index]
+        Ky_train, Ky_test = y_train.iloc[train_index], y_train.iloc[test_index]
+
+        # train a new model with this fold
+        mod = sm.OLS(Ky_train, Kx_train, hasconst=True).fit()
+
+        # calculate error based on prediction
+        train_predicted = mod.predict(Kx_test)
+        cur_rmse = mean_squared_error(Ky_test, train_predicted)**0.5
+
+        # and add to list
+        rmse_arr.append(cur_rmse)
+
+    # return the average of error list
+    return np.average(rmse_arr)
