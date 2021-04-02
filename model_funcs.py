@@ -237,3 +237,49 @@ def cross_val(X_train, y_train, k):
 
     # The average of the error list is a good estimate of the training error
     return np.average(rmse_arr)
+
+def undocked_stations(city):
+    '''Returns a dataframe with aggregates (mean distances and count) for each station
+    '''
+    # Grab full data from desired city
+    if city == 'SF':
+        df = pd.read_csv('data/sf2.csv', index_col='Unnamed: 0')
+    elif city == 'CH':
+        df = pd.read_csv('data/ch1.csv', index_col='Unnamed: 0')
+    else:
+        return None
+
+    # Only want to assess undocked trips and our target feature
+    df = df[df['closest_dist'] > 0]
+    df = df[['closest_id', 'closest_dist']]
+
+    # Make each row a station listing it's mean distance and count for rides nearest it
+    df = df.groupby('closest_id').agg(['mean', 'count']).sort_values(('closest_dist', 'count'), ascending=False)
+
+    # Add station lat/long
+    return df.merge(grab_geo(city), left_index=True, right_index=True)
+
+def graph_distances(city, ax):
+    '''Function to graph undocked bike distances histogram
+
+    recommended figsize=(12,8)
+    '''
+    # Grab target data from desired city
+    if city == 'SF':
+        y = pd.read_csv('data/sf.csv', usecols=['closest_dist'])
+        c = 'San Francisco'
+    elif city == 'CH':
+        y = pd.read_csv('data/ch.csv', usecols=['closest_dist'])
+        c = 'Chicago'
+    else:
+        return None
+
+    # Only looking at distances between 1 - 750
+    y = y[y > 0]
+    y = y[y < 750]
+
+    # Graph and peripherals
+    ax.hist(y, bins=60)
+    ax.set_xlabel('Distance from Nearest Station (m)', fontsize=14)
+    ax.set_ylabel('Frequency\n(Number of Rides)', fontsize=14)
+    ax.set_title('Distance from Nearest Station Histogram - {}'.format(c), fontsize=16)
