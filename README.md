@@ -6,9 +6,9 @@ This study found that select measurements (traffic, time of day, trip time, ride
 >Check out the five minute [slide](https://docs.google.com/presentation/d/13HS4gf5k2q1FyS6gMuHpQNHTizOUYrWCvgY-HT9nRO0/edit?usp=sharing) version of this repo!
 
 ## The story
-Electric bikes are an amazing inovation that bring access and much more range to riders. They're a welcomem addition to rental programs already known for their [benefits](https://www.outsideonline.com/2136406/do-bike-share-systems-actually-work) on metropolitan areas.
+Electric bikes are an amazing innovation that bring access and much more range to riders. They're a welcome addition to rental programs already known for their [benefits](https://www.outsideonline.com/2136406/do-bike-share-systems-actually-work) on metropolitan areas.
 
-For a regular bike rental, a bike is considered returned once it is back in a slot at a station. Electric bikes (for many reasons) have changed the game, and they can be locked anywhere in town there's a bike rack. Obviously it’s better if people leave them at stations for charging and security, so there is a cost. And companies know this: they have started included insentives like small discounts for returning a rental all the way to the station.
+For a regular bike rental, a bike is considered returned once it is back in a slot at a station. Electric bikes (for many reasons) have changed the game, and they can be locked anywhere in town there's a bike rack. Obviously it’s better if people leave them at stations for charging and security, so there is a cost. And companies know this: they have started included incentives like small discounts for returning a rental all the way to the station.
 
 But the truth is electric bikes are still relatively new, and rentals even more so. The market is [developing](https://www.lyft.com/bikes/bay-wheels/service-log) and we still have so much to learn. What can we discover from the data on where bikes are dismounted?
 
@@ -24,7 +24,7 @@ The Chicago Divvy bike share [data](https://divvy-tripdata.s3.amazonaws.com/inde
 - 13 columns, 648k rows (Sept/Oct 2020)
 National Oceanic and Atmospheric Administration's Global Surface Summary of Day [data](https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ncdc%3AC00516/html#)
 - 28 columns, 365 rows (one per calendar day)
-San Francisco Municipal Transportation Agency's Taxi Trips Durig Covid [data](https://www.sfmta.com/reports/taxi-trips-during-covid-19)
+San Francisco Municipal Transportation Agency's Taxi Trips During Covid [data](https://www.sfmta.com/reports/taxi-trips-during-covid-19)
 - 1 column, 383 rows (one per day since COVID began), proxy for amount of traffic on the road
 Chicago Transit Authority's Daily Boarding Totals
 - 5 columns, 7000 rows
@@ -55,7 +55,7 @@ Now let's look at how undocked rides are distributed for each city.
 
 ![plot1](graphs/ch_dist.png)
 
-You can see there’s a somewhat normal distribution but with some sudden spikes. What this says is that there’s some sort of pattern of riders parking a specific distance from a station. And indeed when we look into the makeup of each spike, one station makes up a dispropotionate amount. Specifically spike 1 is mostly rides near the University Ave & 57th station. Spike 2 is about half composed of Blackstone Ave & Hyde Park Blvd. 
+You can see there’s a somewhat normal distribution but with some sudden spikes. What this says is that there’s some sort of pattern of riders parking a specific distance from a station. And indeed when we look into the makeup of each spike, one station makes up a disproportionate amount. Specifically spike 1 is mostly rides near the University Ave & 57th station. Spike 2 is about half composed of Blackstone Ave & Hyde Park Blvd. 
 
 ![plot2](graphs/sf_dist.png)
 
@@ -69,7 +69,7 @@ These stations are surprisingly clustered. Although one is near the famous landm
 
 And next we'll look at the same map for San Francisco and San Jose.
 
-![plot4](graphs/undocked.jpg)
+![plot4](graphs/undocked_sf.jpg)
 
 The big ring on the left (48th Ave at Cabrillo St station) makes sense if you think about it. It's farther from downtown so there's bound to be fewer stations and a lot of bikes are probably left in the park or along the beach.
 
@@ -91,7 +91,7 @@ Once we scale our data and tune hyperparameters and we're sure we have the best 
 >Comparison to baseline: ~6% improvement
 >- Where a baseline model always predicts 128m (the mean distance)
 
-So our model only did 6% better than always guessing 128m. That's not great, so take the following with a grain of salt (or at least a small effect size), but it's not nothing. So where this model has suceeded let's see what it tells us.
+So our model only did 6% better than always guessing 128m. That's not great, so take the following with a grain of salt (or at least a small effect size), but it's not nothing. So where this model has succeeded let's see what it tells us.
 
 The model seems to suggest that if a rider has a membership with the bikeshare company, the bike is likely to be docked closer. Bikes in San Francisco and Chicago are about dropped off at about the same distance, but bikes in San Jose are likely dropped off farther away. More traffic and longer trips mean bikes are likely dropped off farther from stations. As it gets later in the day bikes are likely closer to stations. 
 
